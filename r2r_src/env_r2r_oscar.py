@@ -37,7 +37,7 @@ class EnvBatch():
                 self.image_h = 480
                 self.vfov = 60
                 self.feature_size = next(iter(self.features.values())).shape[-1]
-                print('The feature size is %d' % self.feature_size)
+                print('The r2r imgae feature size is %d' % self.feature_size)
         else:
             print('Image features not provided')
             self.features = None

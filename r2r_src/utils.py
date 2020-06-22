@@ -256,6 +256,7 @@ def read_img_features(feature_store):
     print("Finish Loading the image feature from %s in %0.4f seconds" % (feature_store, time.time() - start))
     return features
 
+# ROCKY: ??
 def read_candidates(candidates_store):
     import csv
     import base64
@@ -296,6 +297,7 @@ def read_candidates(candidates_store):
     candidates = dict(candidates)
     return candidates
 
+# Rocky: This "exploration.json" is not avaliable!
 def add_exploration(paths):
     explore = json.load(open("tasks/R2R/data/exploration.json", 'r'))
     inst2explore = {path['instr_id']: path['trajectory'] for path in explore}
@@ -424,6 +426,7 @@ def get_segments(inst, mask=False):
     segments = list(filter(lambda x: len(x)>0, segments))     # remove the consecutive stop words
     return segments
 
+# Rocky: ??
 def clever_pad_sequence(sequences, batch_first=True, padding_value=0):
     max_size = sequences[0].size()
     max_len, trailing_dims = max_size[0], max_size[1:]

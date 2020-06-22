@@ -3,3 +3,9 @@
 *.zip
 /r2r_src/.idea
 /img_features
+build/*
+pybind11/*
+tasks/R2R/data/*
+.tags*
+.idea/*
+snap/*
