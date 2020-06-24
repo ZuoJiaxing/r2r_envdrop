@@ -1,22 +1,23 @@
 ''' Batched Room-to-Room navigation environment '''
 
 import sys
+import os
 sys.path.append('build')
-sys.path.append('r2r_envdrop/build')
-sys.path.append('r2r_envdrop/r2r_src')
+base_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(base_path)
 import MatterSim
 import csv
 import numpy as np
 import math
 import base64
-import utils_r2r_oscar
+import utils
 import json
 import os
 import random
 import networkx as nx
-from param_r2r_oscar import r2r_envdrop_args as args
+from param import r2r_envdrop_args as args
 
-from utils_r2r_oscar import load_datasets, load_nav_graphs, Tokenizer
+from utils import load_datasets, load_nav_graphs, Tokenizer
 
 csv.field_size_limit(sys.maxsize)
 
@@ -39,7 +40,7 @@ class EnvBatch():
                 self.image_h = 480
                 self.vfov = 60
                 self.feature_size = next(iter(self.features.values())).shape[-1]
-                print('The r2r imgae feature size is %d' % self.feature_size)
+                print('The feature size is %d' % self.feature_size)
         else:
             print('Image features not provided')
             self.features = None
@@ -343,5 +344,3 @@ class R2RBatch():
         stats['length'] = length / len(self.data)
         stats['path'] = path / len(self.data)
         return stats
-
-

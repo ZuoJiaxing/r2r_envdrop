@@ -1,8 +1,6 @@
 import argparse
 import os
 import torch
-import sys
-sys.path.append('r2r_envdrop/r2r_src')
 
 
 class Param:

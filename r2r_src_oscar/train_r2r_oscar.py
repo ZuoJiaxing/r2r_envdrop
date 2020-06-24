@@ -7,16 +7,18 @@ import json
 import numpy as np
 from collections import defaultdict
 
+
 import sys
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
 
-from utils_r2r_oscar import read_vocab,write_vocab,build_vocab,Tokenizer,padding_idx,timeSince, read_img_features
-import utils_r2r_oscar
-from env_r2r_oscar import R2RBatch
+from utils import read_vocab,write_vocab,build_vocab,Tokenizer,padding_idx,timeSince, read_img_features
+from env_oscar import R2RBatch
 from agent import Seq2SeqAgent
 from eval import Evaluation
-from param_r2r_oscar import args as args
+from param import r2r_envdrop_args as args
+
+from oscar.run_vln_pretraining import imgfeat_r2r
 
 def train(train_env, tok, n_iters, log_every=100, val_envs={}, aug_env=None):
     writer = SummaryWriter(logdir=args.log_dir)
@@ -140,6 +142,22 @@ def setup():
         write_vocab(build_vocab(splits=['train']), args.TRAIN_VOCAB)
     if not os.path.exists(args.TRAINVAL_VOCAB):
         write_vocab(build_vocab(splits=['train','val_seen','val_unseen']), args.TRAINVAL_VOCAB)
+
+def prepare_r2r_data():
+    ''' Prepare data from the training set, valseen and val_unseen splits. '''
+    torch.manual_seed(1)
+    torch.cuda.manual_seed(1)
+    feature_data = imgfeat_r2r('/media/diskpart2/oscar_data/r2r_vln/train.yaml')
+    featurized_scans = feature_data.get_feat_scans()
+    train_env = R2RBatch(feature_data, batch_size=args.batchSize, splits=['train'])
+    listner = Seq2SeqAgent(train_env, "", tok, args.maxAction)
+    listner.env = train_env
+    listner.train(interval, feedback=args.feedback)  # Train interval iters
+
+
+
+
+
 
 
 def train_val():

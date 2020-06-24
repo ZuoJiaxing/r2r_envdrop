@@ -14,7 +14,9 @@ import math
 from collections import Counter, defaultdict
 import numpy as np
 import networkx as nx
-from param_r2r_oscar import r2r_envdrop_args as args
+base_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(base_path)
+from param import r2r_envdrop_args as args
 
 
 # padding, unknown word, end of sentence
