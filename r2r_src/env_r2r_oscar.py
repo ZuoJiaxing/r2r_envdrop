@@ -1,20 +1,22 @@
 ''' Batched Room-to-Room navigation environment '''
 
 import sys
-sys.path.append('buildpy36')
+sys.path.append('build')
+sys.path.append('r2r_envdrop/build')
+sys.path.append('r2r_envdrop/r2r_src')
 import MatterSim
 import csv
 import numpy as np
 import math
 import base64
-import utils
+import utils_r2r_oscar
 import json
 import os
 import random
 import networkx as nx
-from param import args
+from param_r2r_oscar import r2r_envdrop_args as args
 
-from utils import load_datasets, load_nav_graphs, Tokenizer
+from utils_r2r_oscar import load_datasets, load_nav_graphs, Tokenizer
 
 csv.field_size_limit(sys.maxsize)
 

@@ -44,7 +44,8 @@ target_link_libraries(random_agent MatterSim)
 
 add_subdirectory(pybind11)
 
-find_package(PythonInterp 3.6 REQUIRED)
+#find_package(PythonInterp 3.7 REQUIRED HINTS ~/miniconda3/envs/oscar_new/)
+#find_package(PythonInterp 3.6 REQUIRED)
 message(${PYTHON_EXECUTABLE})
 
 # Need to search for python executable again to pick up an activated

@@ -1,6 +1,8 @@
 import argparse
 import os
 import torch
+import sys
+sys.path.append('r2r_envdrop/r2r_src')
 
 
 class Param:
@@ -80,17 +82,16 @@ class Param:
         # A2C
         self.parser.add_argument("--gamma", default=0.9, type=float)
         self.parser.add_argument("--normalize", dest="normalize_loss", default="total", type=str, help='batch or total')
-
         self.args = self.parser.parse_args()
 
         if self.args.optim == 'rms':
-            print("Optimizer: Using RMSProp")
+            print("param_r2r_oscar Optimizer: Using RMSProp")
             self.args.optimizer = torch.optim.RMSprop
         elif self.args.optim == 'adam':
-            print("Optimizer: Using Adam")
+            print("param_r2r_oscar Optimizer: Using Adam")
             self.args.optimizer = torch.optim.Adam
         elif self.args.optim == 'sgd':
-            print("Optimizer: sgd")
+            print("param_r2r_oscar Optimizer: sgd")
             self.args.optimizer = torch.optim.SGD
         else:
             assert False
@@ -101,7 +102,16 @@ r2r_envdrop_args.TRAIN_VOCAB = 'r2r_envdrop/tasks/R2R/data/train_vocab.txt'
 r2r_envdrop_args.TRAINVAL_VOCAB = 'r2r_envdrop/tasks/R2R/data/trainval_vocab.txt'
 
 r2r_envdrop_args.IMAGENET_FEATURES = 'r2r_envdrop/img_features/ResNet-152-imagenet.tsv'
+r2r_envdrop_args.FASTERRCNN_FEATURES = '/media/diskpart1/VLN_Data/img_features/faster_rcnn_end2end_total.tsv'
+
+r2r_envdrop_args.features = r2r_envdrop_args.IMAGENET_FEATURES
+
 r2r_envdrop_args.log_dir = 'snap/%s' % r2r_envdrop_args.name
+
+r2r_envdrop_args.IMG_WIDTH = 640
+r2r_envdrop_args.IMG_HEIGHT = 480
+
+r2r_envdrop_args.max_objects_panorama = 100
 
 if not os.path.exists(r2r_envdrop_args.log_dir):
     os.makedirs(r2r_envdrop_args.log_dir)
