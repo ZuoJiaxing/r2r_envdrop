@@ -16,7 +16,7 @@ import numpy as np
 import networkx as nx
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
-from param import r2r_envdrop_args as args
+from .param import r2r_envdrop_args as args
 
 
 # padding, unknown word, end of sentence
@@ -317,6 +317,15 @@ def angle_feature(heading, elevation):
     return np.array([math.sin(heading), math.cos(heading),
                      math.sin(elevation), math.cos(elevation)] * (args.angle_feat_size // 4),
                     dtype=np.float32)
+def angle_feature(heading, elevation):
+    import math
+    # twopi = math.pi * 2
+    # heading = (heading + twopi) % twopi     # From 0 ~ 2pi
+    # It will be the same
+    return np.array([math.sin(heading), math.cos(heading),
+                     math.sin(elevation), math.cos(elevation)] * (args.angle_feat_size // 4),
+                    dtype=np.float32)
+
 
 def new_simulator():
     import MatterSim
@@ -351,7 +360,7 @@ def get_point_angle_feature(baseViewId=0):
         assert state.viewIndex == ix
 
         heading = state.heading - base_heading
-
+        # print("test, heading, state.elevation: ", heading, state.elevation)
         feature[ix, :] = angle_feature(heading, state.elevation)
     return feature
 

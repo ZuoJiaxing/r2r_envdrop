@@ -289,7 +289,13 @@ class R2RBatch():
             candidate = self.make_candidate(feature, state.scanId, state.location.viewpointId, state.viewIndex)
 
             # (visual_feature, angel_feature) for views
+            # print("Test, before concatenate: ")
+            # print(feature.shape)
+            # print((self.angle_feature[base_view_id]).shape)
             feature = np.concatenate((feature, self.angle_feature[base_view_id]), -1)
+            # print("Test, after concatenate: ")
+            # print(feature.shape)
+
             obs.append({
                 'instr_id' : item['instr_id'],
                 'scan' : state.scanId,

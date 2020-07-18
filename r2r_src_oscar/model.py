@@ -89,7 +89,7 @@ class SoftDotAttention(nn.Module):
     Ref: http://www.aclweb.org/anthology/D15-1166
     Adapted from PyTorch OPEN NMT.
     '''
-
+    # Rocky: query_dim is the hidden_size
     def __init__(self, query_dim, ctx_dim):
         '''Initialize layer.'''
         super(SoftDotAttention, self).__init__()

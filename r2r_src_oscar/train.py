@@ -258,7 +258,8 @@ def beam_valid(train_env, tok, val_envs={}):
         listener.logs = defaultdict(list)
         listener.env = env
 
-        listener.beam_search_test(speaker)
+        listener.\
+            beam_search_test(speaker)
         results = listener.results
 
         def cal_score(x, alpha, avg_speaker, avg_listener):

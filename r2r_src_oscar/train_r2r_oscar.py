@@ -147,9 +147,9 @@ def prepare_r2r_data():
     ''' Prepare data from the training set, valseen and val_unseen splits. '''
     torch.manual_seed(1)
     torch.cuda.manual_seed(1)
-    feature_data = imgfeat_r2r('/media/diskpart2/oscar_data/r2r_vln/train.yaml')
-    featurized_scans = feature_data.get_feat_scans()
-    train_env = R2RBatch(feature_data, batch_size=args.batchSize, splits=['train'])
+    feature_data_store = imgfeat_r2r('/media/diskpart2/oscar_data/r2r_vln/train.yaml')
+    featurized_scans = feature_data_store.get_feat_scans()
+    train_env = R2RBatch(feature_data_store, batch_size=args.batchSize, splits=['train'])
     listner = Seq2SeqAgent(train_env, "", tok, args.maxAction)
     listner.env = train_env
     listner.train(interval, feedback=args.feedback)  # Train interval iters

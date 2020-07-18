@@ -316,8 +316,10 @@ class Seq2SeqAgent(BaseAgent):
                     for c_id, c in enumerate(ob['candidate']):
                         if c['viewpointId'] in visited[ob_id]:
                             candidate_mask[ob_id][c_id] = 1
-            logit.masked_fill_(candidate_mask, -float('inf'))
-
+            logit.masked_fill_(candidate_mask, -float('inf')) # fill the masked True (not candidate) with -inf
+            # print("For test, candidate_mask:")
+            # print(candidate_mask)
+actlogit
             # Supervised training
             target = self._teacher_action(perm_obs, ended)
             ml_loss += self.criterion(logit, target)
@@ -345,7 +347,7 @@ class Seq2SeqAgent(BaseAgent):
             # NOTE: Env action is in the perm_obs space
             cpu_a_t = a_t.cpu().numpy()
             for i, next_id in enumerate(cpu_a_t):
-                if next_id == (candidate_leng[i]-1) or next_id == args.ignoreid:    # The last action is <end>
+                if next_id == (candidate_leng[i]-1) or next_id == args.ignoreid or ended[i]:    # The last action is <end>
                     cpu_a_t[i] = -1             # Change the <end> and ignore action to -1
 
             # Make action and get the new state

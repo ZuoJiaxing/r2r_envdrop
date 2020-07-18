@@ -2,9 +2,9 @@
 
 import sys
 import os
-sys.path.append('build')
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
+# sys.path.append('build')
+# base_path = os.path.dirname(os.path.abspath(__file__))
+# sys.path.append(base_path)
 import MatterSim
 import csv
 import numpy as np
@@ -293,6 +293,7 @@ class R2RBatch():
 
             # (visual_feature, angel_feature) for views
             feature = np.concatenate((feature, self.angle_feature[base_view_id]), -1)
+
             obs.append({
                 'instr_id' : item['instr_id'],
                 'scan' : state.scanId,
