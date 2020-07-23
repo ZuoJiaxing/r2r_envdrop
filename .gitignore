@@ -9,3 +9,4 @@ tasks/R2R/data/*
 .tags*
 .idea/*
 snap/*
+output*/

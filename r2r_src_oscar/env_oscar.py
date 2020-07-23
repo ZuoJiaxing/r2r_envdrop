@@ -452,7 +452,8 @@ class R2RBatch():
         length = 0
         path = 0
         for datum in self.data:
-            length += len(self.tok.split_sentence(datum['instructions']))
+            # length += len(self.tok.split_sentence(datum['instructions']))
+            length += len(datum['instructions'].strip().split())
             path += self.distances[datum['scan']][datum['path'][0]][datum['path'][-1]]
         stats['length'] = length / len(self.data)
         stats['path'] = path / len(self.data)

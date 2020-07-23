@@ -11,9 +11,9 @@ import numpy as np
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
-from env import R2RBatch
-from utils import load_datasets, load_nav_graphs
-from agent import BaseAgent
+from .env_oscar import R2RBatch
+from .utils import load_datasets, load_nav_graphs
+# from agent import BaseAgent
 
 
 class Evaluation(object):
@@ -87,10 +87,10 @@ class Evaluation(object):
             if item['instr_id'] in instr_ids:
                 instr_ids.remove(item['instr_id'])
                 self._score_item(item['instr_id'], item['trajectory'])
-        if 'train' not in self.splits:  # Exclude the training from this. (Because training eval may be partial)
-            assert len(instr_ids) == 0, 'Missing %d of %d instruction ids from %s - not in %s'\
-                           % (len(instr_ids), len(self.instr_ids), ",".join(self.splits), output_file)
-            assert len(self.scores['nav_errors']) == len(self.instr_ids)
+        # if 'train' not in self.splits:  # Exclude the training from this. (Because training eval may be partial)
+        #     assert len(instr_ids) == 0, 'Missing %d of %d instruction ids from %s - not in %s'\
+        #                    % (len(instr_ids), len(self.instr_ids), ",".join(self.splits), output_file)
+        #     assert len(self.scores['nav_errors']) == len(self.instr_ids)
         score_summary = {
             'nav_error': np.average(self.scores['nav_errors']),
             'oracle_error': np.average(self.scores['oracle_errors']),
@@ -129,20 +129,20 @@ class Evaluation(object):
 
 RESULT_DIR = 'tasks/R2R/results/'
 
-def eval_simple_agents():
-    ''' Run simple baselines on each split. '''
-    for split in ['train', 'val_seen', 'val_unseen', 'test']:
-        env = R2RBatch(None, batch_size=1, splits=[split])
-        ev = Evaluation([split])
-
-        for agent_type in ['Stop', 'Shortest', 'Random']:
-            outfile = '%s%s_%s_agent.json' % (RESULT_DIR, split, agent_type.lower())
-            agent = BaseAgent.get_agent(agent_type)(env, outfile)
-            agent.test()
-            agent.write_results()
-            score_summary, _ = ev.score(outfile)
-            print('\n%s' % agent_type)
-            pp.pprint(score_summary)
+# def eval_simple_agents():
+#     ''' Run simple baselines on each split. '''
+#     for split in ['train', 'val_seen', 'val_unseen', 'test']:
+#         env = R2RBatch(None, batch_size=1, splits=[split])
+#         ev = Evaluation([split])
+#
+#         for agent_type in ['Stop', 'Shortest', 'Random']:
+#             outfile = '%s%s_%s_agent.json' % (RESULT_DIR, split, agent_type.lower())
+#             agent = BaseAgent.get_agent(agent_type)(env, outfile)
+#             agent.test()
+#             agent.write_results()
+#             score_summary, _ = ev.score(outfile)
+#             print('\n%s' % agent_type)
+#             pp.pprint(score_summary)
 
 
 def eval_seq2seq():
