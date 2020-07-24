@@ -185,6 +185,7 @@ class R2RBatch():
         :param tile_one: Tile the one into batch_size
         :return: None
         """
+        # print("for a test, self.ix: ", self.ix)
         if batch_size is None:
             batch_size = self.batch_size
         if tile_one:
